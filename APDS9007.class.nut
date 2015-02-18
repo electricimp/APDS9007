@@ -1,7 +1,7 @@
-// Ambient Light Sensor APDS-9007-020
-// http://www.avagotech.com/docs/AV02-0512EN
-// Logarithmic Analog Current Output; drive into load resistor and buffer
-// Read with Analog Input
+// Copyright (c) 2015 Electric Imp
+// This file is licensed under the MIT License
+// http://opensource.org/licenses/MIT
+
 class APDS9007 {
     static WAIT_BEFORE_READ = 5.0;
     RLOAD = null; // value of load resistor on ALS (device has current output)
