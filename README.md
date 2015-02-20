@@ -17,7 +17,7 @@ The APDS9007 should be connected as follows:
 ## Constructor
 The instantiate a new APDS9007 object you need to pass in the analog pin the sensor is connected to, and value of the load resistor, and an optional enable pin.
 
-```
+```squirrel
 const RLOAD = 47000.0;
 
 analog_input_pin <- hardware.pin5;
@@ -32,7 +32,7 @@ lightsensor <- APDS9007(analog_input_pin, load_resistor_value_ohms, enable_pin);
 ## APDS9007.read()
 The **.read()** function returns the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux:
 
-```
+```squirrel
 server.log(format("Light Level = %0.2f Lux",lightsensor.read());
 ```
 
