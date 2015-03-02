@@ -38,7 +38,7 @@ lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
 The class’ **read()** function returns the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux):
 
 ```squirrel
-server.log(format("Light Level = %0.2f Lux", lightsensor.read())
+server.log(format("Light Level = %0.2f Lux", lightsensor.read()))
 ```
 
 ## License
