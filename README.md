@@ -7,15 +7,15 @@ The [APDS9007](http://www.mouser.com/ds/2/38/V02-0512EN-4985.pdf) is a simple, l
 
 Because the imp draws a small input current on analog input pins, and because the output current of this part is very low, a buffer is recommended between the load resistor and the imp for best accuracy.
 
-# Hardware
+## Hardware
 
 The APDS9007 should be connected as follows:
 
 ![APDS9007 Circuit](./circuit.png)
 
-# Class Usage
+## Class Usage
 
-## Constructor
+### Constructor
 
 To instantiate a new APDS9007 object, you need to pass in the configured analog input pin the sensor is connected to, the value of the load resistor, and an optional configured digital output enable pin.
 
@@ -31,7 +31,7 @@ enablePin.configure(DIGITAL_OUT, 0)
 lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
 ```
 
-## Reading the Sensor
+### Reading the Sensor
 
 The class’ **.read()** function returns the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux):
 
@@ -39,6 +39,6 @@ The class’ **.read()** function returns the ambient light level in [Lux](http:
 server.log(format("Light Level = %0.2f Lux", lightsensor.read())
 ```
 
-# License
+## License
 
 The APDS9007 library is licensed under the [MIT License](./LICENSE).
