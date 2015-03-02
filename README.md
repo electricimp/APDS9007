@@ -20,15 +20,15 @@ The APDS9007 should be connected as follows:
 To instantiate a new APDS9007 object, you need to pass in the configured analog input pin the sensor is connected to, the value of the load resistor, and an optional configured digital output enable pin.
 
 ```squirrel
-const RLOAD = 47000.0;
+const RLOAD = 47000.0
 
-analog_input_pin <- hardware.pin5;
-enable_pin <- hardware.pin7;
+analogInputPin <- hardware.pin5
+analogInputPin.configure(ANALOG_IN)
 
-analog_input_pin.configure(ANALOG_IN);
-enable_pin.configure(DIGITAL_OUT,0);
+enablePin <- hardware.pin7
+enablePin.configure(DIGITAL_OUT, 0)
 
-lightsensor <- APDS9007(analog_input_pin, RLOAD, enable_pin);
+lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
 ```
 
 ## Reading the Sensor
@@ -36,7 +36,7 @@ lightsensor <- APDS9007(analog_input_pin, RLOAD, enable_pin);
 The class’ **.read()** function returns the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux):
 
 ```squirrel
-server.log(format("Light Level = %0.2f Lux",lightsensor.read());
+server.log(format("Light Level = %0.2f Lux", lightsensor.read())
 ```
 
 # License
