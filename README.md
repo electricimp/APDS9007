@@ -31,9 +31,11 @@ enablePin.configure(DIGITAL_OUT, 0)
 lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
 ```
 
-### Reading the Sensor
+### Class Methods
 
-The class’ **.read()** function returns the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux):
+### Reading the Sensor: read()
+
+The class’ **read()** function returns the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux):
 
 ```squirrel
 server.log(format("Light Level = %0.2f Lux", lightsensor.read())
