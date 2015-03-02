@@ -28,7 +28,7 @@ enable_pin <- hardware.pin7;
 analog_input_pin.configure(ANALOG_IN);
 enable_pin.configure(DIGITAL_OUT,0);
 
-lightsensor <- APDS9007(analog_input_pin, RLOA, enable_pin);
+lightsensor <- APDS9007(analog_input_pin, RLOAD, enable_pin);
 ```
 
 ## Reading the Sensor
