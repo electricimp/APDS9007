@@ -1,15 +1,14 @@
-// Copyright (c) 2015 Electric Imp
-// This file is licensed under the MIT License
-// http://opensource.org/licenses/MIT
-
+// Ambient Light Sensor APDS-9007-020
+// http://www.avagotech.com/docs/AV02-0512EN
+// Logarithmic Analog Current Output; drive into load resistor and buffer
+// Read with Analog Input
 class APDS9007 {
-    static WAIT_BEFORE_READ = 5.0;
     RLOAD = null; // value of load resistor on ALS (device has current output)
-
+    
     _als_pin            = null;
     _als_en             = null;
     _points_per_read    = null;
-
+    
     // -------------------------------------------------------------------------
     constructor(als_pin, rload, als_en = null, points_per_read = 10) {
         _als_pin = als_pin;
@@ -17,13 +16,12 @@ class APDS9007 {
         RLOAD = rload;
         _points_per_read = points_per_read * 1.0; //force to a float
     }
-
+    
     // -------------------------------------------------------------------------
     // read the ALS and return value in lux
     function read() {
         if (_als_en) {
             _als_en.write(1);
-            imp.sleep(WAIT_BEFORE_READ);
         }
         local Vpin = 0;
         local Vcc = 0;
@@ -40,3 +38,4 @@ class APDS9007 {
         return (math.pow(10.0,(Iout/10.0)));
     }
 }
+
