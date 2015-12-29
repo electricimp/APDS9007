@@ -35,7 +35,7 @@ class APDS9007 {
             imp.wakeup(ENABLE_TIMEOUT, function() {
                 _enabled = true;
                 _enable_flag = false;
-            })
+            }.bindenv(this))
         }
         if (_als_en && !state) {
             _als_en.write(0);
@@ -69,6 +69,9 @@ class APDS9007 {
                 Vcc += hardware.voltage();
             }
 
+            server.log(Vpin)
+            server.log(Vcc)
+
             Vpin = (Vpin * 1.0) / _points_per_read;
             Vcc = (Vcc * 1.0) / _points_per_read;
             Vpin = (Vpin / 65535.0) * Vcc;
@@ -86,7 +89,7 @@ class APDS9007 {
             if(_enable_flag) {
                 imp.wakeup(1, function() {
                     read(cb);
-                });
+                }.bindenv(this));
             } else {
                 result = {"err" : "Sensor Not Enabled"};
 
@@ -94,7 +97,7 @@ class APDS9007 {
                 if (cb == null) { return result; }
 
                 // Invoke the callback if one was passed
-                imp.wakeup(0, function() { cb(result); });
+                imp.wakeup(0, function() { cb(result); }.bindenv(this));
             }
         }
 
