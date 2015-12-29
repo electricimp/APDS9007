@@ -54,13 +54,13 @@ server.log( lightsensor.getPointsPerReading() );
 The **setPointsPerReading()** function sets the number of readings taken and internally averaged to produce a light level result.  The points per reading value is returned.  By default points per reading is set to 10.
 
 ```squirrel
-// Set number of readings to be averaged to 15.  Slower, but more precise.
+// Set number of readings to be averaged to 15.  Slower than default, but more precise.
 lightsensor.setPointsPerReading(15);
 ```
 
 ### read([callback])
 
-The **read()** function reads and returns a table with the ambient light level - *brightness* - in [Lux](http://en.wikipedia.org/wiki/Lux). If a callback is supplied, the read will execute asynchronously and the result table  will be passed to the callback function – if no callback is supplied, the read will execute synchronously and a table containing the sensor data will be returned.
+The **read()** function reads and returns a table with a key of *brightness* containing the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux). If a callback is supplied, the read will execute asynchronously and the result table  will be passed to the callback function – if no callback is supplied, the read will execute synchronously and a table containing the sensor data will be returned.
 
 ```squirrel
 lightsensor.read(function(result) {
