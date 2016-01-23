@@ -1,5 +1,6 @@
 #require "APDS9007.class.nut:2.0.0"
 
+// value of load resistor on ALS
 const RLOAD = 47000.0
 
 // use pin#5 as analog in
@@ -23,7 +24,7 @@ readLightLevel <- @() lightsensor.read(function(result) {
         return;
     }
     server.log("Light level = " + result.brightness + " Lux");
-    imp.wakeup(2, readLightLevel); // repeat in 2 secounds
+    imp.wakeup(2, readLightLevel); // repeat in 2 seconds
 });
 
 // start reading light level every 2 seconds
