@@ -16,15 +16,15 @@ class APDS9007 {
     static ENABLE_TIMEOUT = 5.0;
 
     // value of load resistor on ALS (device has current output)
-    _rload              = null;
+    _rload              = 0.0;
     _als_pin            = null;
-    _als_en             = null;
-
-    _points_per_read    = null;
-    _enable_flag        = null;
-    _enabled            = null;
 
     constructor(als_pin, rload, als_en = null) {
+    _als_en             = false;
+
+    _points_per_read    = 0.0;
+    _enable_flag        = false;
+    _enabled            = false;
         _als_pin = als_pin;
         _als_en = als_en;
         _rload = rload;
