@@ -1,18 +1,18 @@
 #require "APDS9007.class.nut:2.0.0"
 
 // value of load resistor on ALS
-const RLOAD = 47000.0
+const RLOAD = 47000.0;
 
 // use pin#5 as analog in
-analogInputPin <- hardware.pin5
-analogInputPin.configure(ANALOG_IN)
+analogInputPin <- hardware.pin5;
+analogInputPin.configure(ANALOG_IN);
 
 // use pin#7 as digital out
-enablePin <- hardware.pin7
-enablePin.configure(DIGITAL_OUT, 0)
+enablePin <- hardware.pin7;
+enablePin.configure(DIGITAL_OUT, 0);
 
 // initialize driver class
-lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
+lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin);
 
 // enable sensor
 lightsensor.enable(true);
