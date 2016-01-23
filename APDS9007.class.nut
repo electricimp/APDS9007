@@ -75,9 +75,6 @@ class APDS9007 {
                 Vcc += hardware.voltage();
             }
 
-            server.log(Vpin)
-            server.log(Vcc)
-
             Vpin = (Vpin * 1.0) / _points_per_read;
             Vcc = (Vcc * 1.0) / _points_per_read;
             Vpin = (Vpin / 65535.0) * Vcc;
