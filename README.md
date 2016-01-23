@@ -77,3 +77,8 @@ Note If an error occured during the read, an err key will be present in the data
 ## License
 
 The APDS9007 library is licensed under the [MIT License](./LICENSE).
+
+## Development
+
+This repository uses [git-flow](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/).
+Please make your pull requests to the __develop__ branch.
