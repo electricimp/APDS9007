@@ -1,7 +1,13 @@
-// Copyright (c) 2015 Electric Imp
-// This file is licensed under the MIT License
-// http://opensource.org/licenses/MIT
+/**
+ * This file is licensed under the MIT License
+ * http://opensource.org/licenses/MIT
+ * @copyright (c) 2015 Electric Imp
+ */
 
+/**
+ * Driver for the APDS9007 Analog Ambient Light Sensor
+ * @version 2.0.0
+ */
 class APDS9007 {
 
     static version = [2,0,0];
