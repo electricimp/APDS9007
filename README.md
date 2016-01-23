@@ -74,6 +74,47 @@ lightsensor.read(function(result) {
 
 Note If an error occured during the read, an err key will be present in the data – you should always check for the existance of the err key before using the results.
 
+## Example
+
+```squirrel
+#require "APDS9007.class.nut:2.0.0"
+
+// value of load resistor on ALS
+const RLOAD = 47000.0
+
+// use pin#5 as analog in
+analogInputPin <- hardware.pin5
+analogInputPin.configure(ANALOG_IN)
+
+// use pin#7 as digital out
+enablePin <- hardware.pin7
+enablePin.configure(DIGITAL_OUT, 0)
+
+// initialize driver class
+lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
+
+// enable sensor
+lightsensor.enable(true);
+
+// get readout
+readLightLevel <- @() lightsensor.read(function(result) {
+    if ("err" in result) {
+        server.log("Error Reading APDS9007: " + result.err);
+        return;
+    }
+    server.log("Light level = " + result.brightness + " Lux");
+    imp.wakeup(2, readLightLevel); // repeat in 2 seconds
+});
+
+// start reading light level every 2 seconds
+readLightLevel();
+```
+
 ## License
 
 The APDS9007 library is licensed under the [MIT License](./LICENSE).
+
+## Development
+
+This repository uses [git-flow](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/).
+Please make your pull requests to the __develop__ branch.
