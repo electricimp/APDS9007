@@ -84,10 +84,16 @@ class APDS9007 {
 
     /**
      * Get reading
-     * Assumes that the sensor is enabled and enable timeout has passed
+     * Assumes that enable timeout has passed
+     * @throws ERR_SENSOR_NOT_ENABLED
      * @private
      */
     function _read() {
+
+        if (!_enabled_at) {
+            throw ERR_SENSOR_NOT_ENABLED;
+        }
+
         local Vpin = 0;
         local Vcc = 0;
 
@@ -109,6 +115,9 @@ class APDS9007 {
      * Reads and returns a table with a key of brightness
      * containing the ambient light level in Lux.
      *
+     * @throws ERR_SENSOR_NOT_ENABLED
+     * @throws ERR_SENSOR_NOT_READY
+     *
      * @param {function(result)|null} cb - Callback executed on reading availability. If no callback specified, reading is returned.
      * @return {null|{brightness}}
      */
@@ -122,7 +131,10 @@ class APDS9007 {
 
                 if (ENABLE_TIMEOUT <= seconds_since_enabled) {
                     // timeout has passed, we're good to go
-                    imp.wakeup(0, (@() cb(_read())).bindenv(this) );
+                    imp.wakeup(0, (@() {
+                        try { cb(_read()) }
+                        catch (e) { cb({err = e}) }
+                    }).bindenv(this) );
                 } else {
                     // we will be able to read once timeout passes
                     imp.wakeup(
@@ -145,7 +157,10 @@ class APDS9007 {
             if (cb /* we're async */) {
 
                 // pass error to callback
-                imp.wakeup(0, (@() cb({err = ERR_SENSOR_NOT_ENABLED})).bindenv(this));
+                imp.wakeup(0, (@() {
+                    try { cb(_read()) }
+                    catch (e) { cb({err = e}) }
+                }).bindenv(this) );
 
             } else /* we're sync*/ {
                 throw ERR_SENSOR_NOT_ENABLED;
