@@ -81,6 +81,11 @@ class APDS9007 {
         return _points_per_read;
     }
 
+    /**
+     * Get reading
+     * Assumes that the sensor is enabled and enable timeout has passed
+     * @private
+     */
     function _read() {
         local Vpin = 0;
         local Vcc = 0;
