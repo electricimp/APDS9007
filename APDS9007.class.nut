@@ -118,7 +118,7 @@ class APDS9007 {
 
             if (cb /* we're async */) {
 
-                if (ENABLE_TIMEOUT < seconds_since_enabled) {
+                if (ENABLE_TIMEOUT <= seconds_since_enabled) {
                     // timeout has passed, we're good to go
                     imp.wakeup(0, function() { cb(_read()); }.bindenv(this));
                 } else {
