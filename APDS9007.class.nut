@@ -12,11 +12,11 @@
  * @author Mikhail Yurasov <mikhail@electricimp.com>
  * @author Aron Steg <aron@electricimp.com>
  *
- * @version 2.0.0
+ * @version 2.0.1
  */
 class APDS9007 {
 
-    static version = [2, 0, 0];
+    static version = [2, 0, 1];
 
     // For accurate readings time needed to wait after enabled
     static ENABLE_TIMEOUT = 5.0;
@@ -58,8 +58,8 @@ class APDS9007 {
     function enable(state = true) {
         if (state) /* enabling */ {
             // store time enable() was called
-            _enabled_at = hardware.millis();
             _enable_pin.write(1);
+            _enabled_at = hardware.millis();
         } else /* disabling */ {
             _enable_pin.write(0);
             _enabled_at = null;
