@@ -141,13 +141,15 @@ class APDS9007 {
 
         } else /* sensor is not enabled */ {
 
+            local message = "Sensor is not enabled. Call enable(true) before reading";
+
             if (cb /* we're async */) {
 
                 // pass error to callback
-                imp.wakeup(0, function() { cb({err = "Sensor is not enabled. Call enable(true) before reading"}); }.bindenv(this));
+                imp.wakeup(0, function() { cb({err = message}); }.bindenv(this));
 
             } else /* we're sync*/ {
-                throw "Sensor is not enabled. Call enable(true) before reading"
+                throw message;
             }
         }
 
