@@ -72,7 +72,7 @@ lightsensor.read(function(result) {
 });
 ```
 
-Note If an error occured during the read, an err key will be present in the data – you should always check for the existance of the err key before using the results.
+Note If an error occured during the read in _asynchronous_ mode, an err key will be present in the data – you should always check for the existance of the err key before using the results. In _synchronous_ mode an exception will be thrown in case of error. 
 
 ## Example
 
