@@ -108,8 +108,8 @@ class APDS9007 {
      * Reads and returns a table with a key of brightness
      * containing the ambient light level in Lux.
      *
-     * @param {function(result)|null} cb - callback executed on reading availability
-     * @return {null|{read}
+     * @param {function(result)|null} cb - Callback executed on reading availability. If no callback specified, reading is rejturned
+     * @return {null|{brightness}}
      */
     function read(cb = null) {
 
