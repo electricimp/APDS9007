@@ -122,7 +122,7 @@ class APDS9007 {
 
                 if (ENABLE_TIMEOUT <= seconds_since_enabled) {
                     // timeout has passed, we're good to go
-                    imp.wakeup(0, function() { cb(_read()); }.bindenv(this));
+                    imp.wakeup(0, (@() cb(_read()).bindenv(this));
                 } else {
                     // we will be able to read once timeout passes
                     imp.wakeup(
@@ -145,7 +145,7 @@ class APDS9007 {
             if (cb /* we're async */) {
 
                 // pass error to callback
-                imp.wakeup(0, function() { cb({err = ERR_SENSOR_NOT_ENABLED}); }.bindenv(this));
+                imp.wakeup(0, (@() cb({err = ERR_SENSOR_NOT_ENABLED})).bindenv(this));
 
             } else /* we're sync*/ {
                 throw ERR_SENSOR_NOT_ENABLED;
