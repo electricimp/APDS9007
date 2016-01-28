@@ -7,7 +7,7 @@ const RLOAD = 47000.0;
 analogInputPin <- hardware.pin5;
 analogInputPin.configure(ANALOG_IN);
 
-// use pin#7 as digital out
+// use pin#7 as enable pin
 enablePin <- hardware.pin7;
 enablePin.configure(DIGITAL_OUT, 0);
 
