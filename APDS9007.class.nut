@@ -20,7 +20,7 @@ class APDS9007 {
     _input_pin          = null;
     _enable_pin         = null;
 
-    _points_per_read    = 0.0;
+    _points_per_read    = 10.0;
     _enable_flag        = false;
     _enabled            = false;
 
@@ -30,13 +30,9 @@ class APDS9007 {
      * @param {Pin} enable_pin - enable pin
      */
     constructor(input_pin, rload, enable_pin = null) {
-
         _input_pin = input_pin;
         _enable_pin = enable_pin;
         _rload = rload;
-
-        _points_per_read = 10.0;
-
         enable(!!enable_pin);
     }
 
