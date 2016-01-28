@@ -17,7 +17,7 @@ The APDS9007 should be connected as follows:
 
 ### Constructor
 
-To instantiate a new APDS9007 object, you need to pass in the configured analog input pin the sensor is connected to, the value of the load resistor, and an optional configured digital output enable pin.
+To instantiate a new APDS9007 object, you need to pass in the configured analog input pin the sensor is connected to, the value of the load resistor, and a configured digital output enable pin.
 
 ```squirrel
 const RLOAD = 47000.0
@@ -72,7 +72,7 @@ lightsensor.read(function(result) {
 });
 ```
 
-Note If an error occured during the read, an err key will be present in the data – you should always check for the existance of the err key before using the results.
+Note If an error occured during the read in _asynchronous_ mode, an err key will be present in the data – you should always check for the existance of the err key before using the results. In _synchronous_ mode an exception will be thrown in case of error.
 
 ## Example
 
@@ -80,33 +80,35 @@ Note If an error occured during the read, an err key will be present in the data
 #require "APDS9007.class.nut:2.0.0"
 
 // value of load resistor on ALS
-const RLOAD = 47000.0
+const RLOAD = 47000.0;
 
-// use pin#5 as analog in
-analogInputPin <- hardware.pin5
-analogInputPin.configure(ANALOG_IN)
+// use pin#5 as analog input
+analogInputPin <- hardware.pin5;
+analogInputPin.configure(ANALOG_IN);
 
-// use pin#7 as digital out
-enablePin <- hardware.pin7
-enablePin.configure(DIGITAL_OUT, 0)
+// use pin#7 as enable poin
+enablePin <- hardware.pin7;
+enablePin.configure(DIGITAL_OUT, 0);
 
 // initialize driver class
-lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
+lightsensor <- APDS9007(analogInputPin, RLOAD , enablePin);
 
 // enable sensor
 lightsensor.enable(true);
 
 // get readout
-readLightLevel <- @() lightsensor.read(function(result) {
-    if ("err" in result) {
-        server.log("Error Reading APDS9007: " + result.err);
-        return;
-    }
-    server.log("Light level = " + result.brightness + " Lux");
-    imp.wakeup(2, readLightLevel); // repeat in 2 seconds
-});
+function readLightLevel() {
+    lightsensor.read(function (result) {
+        if ("err" in result) {
+            server.log("Error Reading APDS9007: " + result.err);
+            return;
+        }
+        server.log("Light level = " + result.brightness + " Lux");
+        imp.wakeup(2, readLightLevel); // repeat in 2 seconds
+    });
+};
 
-// start reading light level every 2 seconds
+// start reading light level every 2 seconds, the first reading will arrive in 5 secs
 readLightLevel();
 ```
 
