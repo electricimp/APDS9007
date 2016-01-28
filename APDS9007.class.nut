@@ -10,7 +10,7 @@
  */
 class APDS9007 {
 
-    static version = [2,0,0];
+    static version = [2, 0, 0];
 
     // For accurate readings time needed to wait after enabled
     static ENABLE_TIMEOUT = 5.0;
@@ -124,9 +124,10 @@ class APDS9007 {
                     imp.wakeup(0, function() { cb(_read()); }.bindenv(this));
                 } else {
                     // we will be able to read once timeout passes
-                    imp.wakeup(ENABLE_TIMEOUT - seconds_since_enabled, function () {
-                        read(cb);
-                    }.bindenv(this));
+                    imp.wakeup(
+                        ENABLE_TIMEOUT - seconds_since_enabled + 0.1 /* compensate for timer inaccuracy */,
+                        (@() read(cb)).bindenv(this)
+                    );
                 }
 
             } else /* we're sync */ {
