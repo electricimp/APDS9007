@@ -12,7 +12,7 @@ enablePin <- hardware.pin7;
 enablePin.configure(DIGITAL_OUT, 0);
 
 // initialize driver class
-lightsensor <- APDS9007(analogInputPin, 47000 , enablePin);
+lightsensor <- APDS9007(analogInputPin, RLOAD , enablePin);
 
 // enable sensor
 lightsensor.enable(true);

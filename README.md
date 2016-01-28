@@ -72,7 +72,7 @@ lightsensor.read(function(result) {
 });
 ```
 
-Note If an error occured during the read in _asynchronous_ mode, an err key will be present in the data – you should always check for the existance of the err key before using the results. In _synchronous_ mode an exception will be thrown in case of error. 
+Note If an error occured during the read in _asynchronous_ mode, an err key will be present in the data – you should always check for the existance of the err key before using the results. In _synchronous_ mode an exception will be thrown in case of error.
 
 ## Example
 
@@ -91,7 +91,7 @@ enablePin <- hardware.pin7;
 enablePin.configure(DIGITAL_OUT, 0);
 
 // initialize driver class
-lightsensor <- APDS9007(analogInputPin, 47000 , enablePin);
+lightsensor <- APDS9007(analogInputPin, RLOAD , enablePin);
 
 // enable sensor
 lightsensor.enable(true);
