@@ -35,7 +35,7 @@ class APDS9007 {
         _enable_pin = enable_pin;
         _rload = rload;
 
-        this._points_per_read = 10.0;
+        _points_per_read = 10.0;
 
         enable(!!enable_pin);
     }
