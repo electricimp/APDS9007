@@ -78,9 +78,7 @@ class APDS9007 {
      */
     function setPointsPerReading(points) {
         // Force to a float
-        if (typeof points == "integer" || typeof points == "float") {
-            _points_per_read = points * 1.0;
-        }
+        _points_per_read = points.tofloat();
         return _points_per_read;
     }
 
@@ -136,7 +134,7 @@ class APDS9007 {
             } else /* we're sync */ {
 
                 if (ENABLE_TIMEOUT > seconds_since_enabled) {
-                    throw "Sensor is not ready";
+                    throw ERR_SENSOR_NOT_READY;
                 }
 
                 return _read();
