@@ -100,7 +100,7 @@ class APDS9007 {
         Vpin = (Vpin / 65535.0) * Vcc;
 
         local Iout = (Vpin / _rload) * 1000000.0; // current in µA
-        result = {"brightness" : math.pow(10.0, (Iout / 10.0))};
+        return {"brightness" : math.pow(10.0, (Iout / 10.0))};
     }
 
     /**
