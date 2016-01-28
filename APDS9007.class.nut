@@ -122,7 +122,7 @@ class APDS9007 {
 
                 if (ENABLE_TIMEOUT <= seconds_since_enabled) {
                     // timeout has passed, we're good to go
-                    imp.wakeup(0, (@() cb(_read()).bindenv(this));
+                    imp.wakeup(0, (@() cb(_read())).bindenv(this) );
                 } else {
                     // we will be able to read once timeout passes
                     imp.wakeup(
