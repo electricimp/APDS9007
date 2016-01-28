@@ -34,7 +34,6 @@ class APDS9007 {
         _input_pin = input_pin;
         _enable_pin = enable_pin;
         _rload = rload;
-        enable(!!enable_pin);
     }
 
     /**
