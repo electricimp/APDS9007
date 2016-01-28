@@ -17,25 +17,27 @@ class APDS9007 {
 
     // value of load resistor on ALS (device has current output)
     _rload              = 0.0;
-    _als_pin            = null;
-    _als_en             = false;
+    _input_pin          = null;
+    _enable_pin         = null;
 
     _points_per_read    = 0.0;
     _enable_flag        = false;
     _enabled            = false;
 
     /**
-     * @param {Pin} als_pin - analog input pin
+     * @param {Pin} input_pin - analog input pin
      * @param {float} rload - value of load resistor on ALS (device has current output)
-     * @param {bool} als_en - sensor enable flag
+     * @param {Pin} enable_pin - enable pin
      */
-    constructor(als_pin, rload, als_en = false) {
-        _als_pin = als_pin;
-        _als_en = als_en;
-        _rload = rload;
+    constructor(input_pin, rload, enable_pin = null) {
 
+        _input_pin = input_pin;
+        _enable_pin = enable_pin;
+        _rload = rload;
         _enabled = _als_en ? false : true;
-        _points_per_read = 10.0;
+
+        this._points_per_read = 10.0;
+
     }
 
     /**
@@ -48,16 +50,16 @@ class APDS9007 {
      * @return {null}
      */
     function enable(state = true) {
-        if (_als_en && state) {
-            _als_en.write(1);
+        if (_enable_pin && state) {
+            _enable_pin.write(1);
             _enable_flag = true;
             imp.wakeup(ENABLE_TIMEOUT, function() {
                 _enabled = true;
                 _enable_flag = false;
             }.bindenv(this))
         }
-        if (_als_en && !state) {
-            _als_en.write(0);
+        if (_enable_pin && !state) {
+            _enable_pin.write(0);
             _enabled = false;
         }
     }
@@ -102,7 +104,7 @@ class APDS9007 {
 
             // average several readings for improved precision
             for (local i = 0; i < _points_per_read; i++) {
-                Vpin += _als_pin.read();
+                Vpin += _input_pin.read();
                 Vcc += hardware.voltage();
             }
 
