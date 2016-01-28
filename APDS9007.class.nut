@@ -140,7 +140,7 @@ class APDS9007 {
 
         } else /* sensor is not enabled */ {
 
-            local message = "Sensor is not enabled. Call enable(true) before reading";
+            local message = "Sensor is not enabled. Call enable(true) before reading.";
 
             if (cb /* we're async */) {
 
