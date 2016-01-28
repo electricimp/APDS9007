@@ -34,10 +34,10 @@ class APDS9007 {
         _input_pin = input_pin;
         _enable_pin = enable_pin;
         _rload = rload;
-        _enabled = _als_en ? false : true;
 
         this._points_per_read = 10.0;
 
+        enable(!!enable_pin);
     }
 
     /**
