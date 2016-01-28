@@ -15,6 +15,10 @@ class APDS9007 {
     // For accurate readings time needed to wait after enabled
     static ENABLE_TIMEOUT = 5.0;
 
+    // errors
+    static ERR_SENSOR_NOT_READY = "Sensor is not ready";
+    static ERR_SENSOR_NOT_ENABLED = "Sensor is not enabled. Call enable(true) before reading.";
+
     // value of load resistor on ALS (device has current output)
     _rload              = 0.0;
     _input_pin          = null;
@@ -140,15 +144,13 @@ class APDS9007 {
 
         } else /* sensor is not enabled */ {
 
-            local message = "Sensor is not enabled. Call enable(true) before reading.";
-
             if (cb /* we're async */) {
 
                 // pass error to callback
-                imp.wakeup(0, function() { cb({err = message}); }.bindenv(this));
+                imp.wakeup(0, function() { cb({err = ERR_SENSOR_NOT_ENABLED}); }.bindenv(this));
 
             } else /* we're sync*/ {
-                throw message;
+                throw ERR_SENSOR_NOT_ENABLED;
             }
         }
 
