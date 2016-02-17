@@ -112,11 +112,29 @@ function readLightLevel() {
 readLightLevel();
 ```
 
-## License
+## Testing
 
-The APDS9007 library is licensed under the [MIT License](./LICENSE).
+Repository comes with a test suite for [impUnit](https://github.com/electricimp/impUnit) and test configuration for [impTest](https://github.com/electricimp/impTest).
+
+### Running Tests
+
+In __.imptest__ file _modelId_ and _deviceId_ settings should be set to the correct model and device(s) available on your account. Build API key may be stored in the environment variable _IMP_BUILD_API_KEY_ or in _apiKey_ parameter in __.imptest__ file.
+
+Then tests can be launched with:
+
+```bash
+imptest test
+```
+
+### Hardware Required
+
+Tests are expecting an [April](https://electricimp.com/docs/gettingstarted/devkits/) board with the [Env Tail](https://electricimp.com/docs/tails/env/).
 
 ## Development
 
 This repository uses [git-flow](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/).
 Please make your pull requests to the __develop__ branch.
+
+## License
+
+The APDS9007 library is licensed under the [MIT License](./LICENSE).
