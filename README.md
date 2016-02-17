@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Driver for the APDS9007 Analog Ambient Light Sensor](#driver-for-the-apds9007-analog-ambient-light-sensor)
+  - [Hardware](#hardware)
+  - [Class Usage](#class-usage)
+    - [Constructor](#constructor)
+    - [Class Methods](#class-methods)
+    - [enable([state])](#enablestate)
+    - [getPointsPerReading()](#getpointsperreading)
+    - [setPointsPerReading(pointsPerReading)](#setpointsperreadingpointsperreading)
+    - [read([callback])](#readcallback)
+  - [Example](#example)
+  - [Testing](#testing)
+    - [Running Tests](#running-tests)
+    - [Hardware Required](#hardware-required)
+  - [Development](#development)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 Driver for the APDS9007 Analog Ambient Light Sensor
 ===================================
 
