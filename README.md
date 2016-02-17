@@ -13,7 +13,6 @@
     - [read([callback])](#readcallback)
   - [Example](#example)
   - [Testing](#testing)
-    - [Running Tests](#running-tests)
     - [Hardware Required](#hardware-required)
   - [Development](#development)
   - [License](#license)
@@ -142,15 +141,13 @@ readLightLevel();
 
 Repository comes with a test suite for [impUnit](https://github.com/electricimp/impUnit) and test configuration for [impTest](https://github.com/electricimp/impTest).
 
-### Running Tests
-
-In __.imptest__ file _modelId_ and _deviceId_ settings should be set to the correct model and device(s) available on your account. Build API key may be stored in the environment variable _IMP_BUILD_API_KEY_ or in _apiKey_ parameter in __.imptest__ file.
-
-Then tests can be launched with:
+Tests can be launched with:
 
 ```bash
 imptest test
 ```
+
+Settings for the testing environment can be adjusted in the [.imptest file](https://github.com/electricimp/impTest/blob/develop/docs/imptest-spec.md).
 
 ### Hardware Required
 
