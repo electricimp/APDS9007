@@ -22,7 +22,7 @@
 
 <br/>
 
-![Build Status](https://travis-ci.org/electricimp/APDS9007.svg?branch=feature/testcases)
+[![Build Status](https://travis-ci.org/electricimp/APDS9007.svg?branch=feature/testcases)](https://travis-ci.org/electricimp/APDS9007)
 
 Driver for the APDS9007 Analog Ambient Light Sensor
 ===================================
