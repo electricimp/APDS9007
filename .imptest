@@ -1,0 +1,10 @@
+{
+    "modelId": "CBNbtebOiVWC",
+    "devices": [
+        "23236c6938a609ee"
+    ],
+    "deviceFile": "APDS9007.class.nut",
+    "agentFile": false,
+    "stopOnFailure": false,
+    "timeout": 30
+}
