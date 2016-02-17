@@ -26,9 +26,9 @@
     }
 
     /**
-     * Test sensor readout
+     * Test sensor readout in async mode
      */
-    function testReadout() {
+    function testAsyncReadout() {
         return Promise(function (ok, err) {
 
             local startMillis = hardware.millis();
