@@ -19,6 +19,8 @@
 
         // initialize driver class
         this._lightSensor = APDS9007(analogInputPin, 47000, enablePin);
+
+        return "Sensor initialized";
     }
 
     /**
@@ -68,7 +70,7 @@
 
         // reading before timeout should raise an error
         try {
-            local l = this._lightSensor.read();
+            local r = this._lightSensor.read();
         } catch (e) {
             err = e;
         }
