@@ -103,4 +103,45 @@
             this._lightSensor.enable(false);
          }.bindenv(this));
     }
+
+    /**
+     * Test sensor readout in async mode after initial delayof 4.75s
+     * Reading should arrive in ~o.25s
+     */
+    function test_Async_Readout_After_Initial_Delay() {
+        return Promise(function (ok, err) {
+
+            this._lightSensor.enable(true);
+
+            imp.wakeup(4.75, function () {
+
+                local startMillis = hardware.millis();
+                this._lightSensor.read(function (r) {
+
+                    if ("err" in r) {
+                        err("Error Reading APDS9007: " + r.err);
+                        return;
+                    }
+
+                    try {
+                        // check that first readout arrives after 5s (+-100ms)
+                        this.assertClose(250, hardware.millis() - startMillis, 50);
+                        // check that light level reported is meaningful
+                        this.assertTrue(r.brightness > 0, "Light level should be greater than zero");
+                    } catch (e) {
+                        err(e);
+                        return;
+                    }
+
+                    ok("Light level is " + r.brightness + " Lux");
+
+                }.bindenv(this));
+            }.bindenv(this));
+        }.bindenv(this))
+
+        .then(function (e) {
+            this._lightSensor.enable(false);
+         }.bindenv(this));
+    }
+
  }
