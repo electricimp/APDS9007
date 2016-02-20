@@ -20,7 +20,7 @@
         // initialize driver class
         this._lightSensor = APDS9007(analogInputPin, 47000, enablePin);
 
-        return "Sensor initialized";
+        return "Sensor initialized!";
     }
 
     /**
