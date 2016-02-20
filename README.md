@@ -1,3 +1,28 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Driver for the APDS9007 Analog Ambient Light Sensor](#driver-for-the-apds9007-analog-ambient-light-sensor)
+  - [Hardware](#hardware)
+  - [Class Usage](#class-usage)
+    - [Constructor](#constructor)
+    - [Class Methods](#class-methods)
+    - [enable([state])](#enablestate)
+    - [getPointsPerReading()](#getpointsperreading)
+    - [setPointsPerReading(pointsPerReading)](#setpointsperreadingpointsperreading)
+    - [read([callback])](#readcallback)
+  - [Example](#example)
+  - [Testing](#testing)
+    - [Hardware Required](#hardware-required)
+  - [Development](#development)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<br/>
+
+[![Build Status](https://travis-ci.org/electricimp/APDS9007.svg?branch=feature/testcases)](https://travis-ci.org/electricimp/APDS9007)
+
 Driver for the APDS9007 Analog Ambient Light Sensor
 ===================================
 
@@ -112,11 +137,27 @@ function readLightLevel() {
 readLightLevel();
 ```
 
-## License
+## Testing
 
-The APDS9007 library is licensed under the [MIT License](./LICENSE).
+Repository comes with a test suite for [impUnit](https://github.com/electricimp/impUnit) and test configuration for [impTest](https://github.com/electricimp/impTest).
+
+Tests can be launched with:
+
+```bash
+imptest test
+```
+
+Settings for the testing environment can be adjusted in the [.imptest file](https://github.com/electricimp/impTest/blob/develop/docs/imptest-spec.md).
+
+### Hardware Required
+
+Tests are expecting an [April](https://electricimp.com/docs/gettingstarted/devkits/) board with the [Env Tail](https://electricimp.com/docs/tails/env/).
 
 ## Development
 
 This repository uses [git-flow](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/).
 Please make your pull requests to the __develop__ branch.
+
+## License
+
+The APDS9007 library is licensed under the [MIT License](./LICENSE).

@@ -1,0 +1,6 @@
+{
+    "modelId": "rOgeGCEM1cS7",
+    "devices": ["23349c7838a609ee"],
+    "deviceFile": "APDS9007.class.nut",
+    "timeout": 7
+}
