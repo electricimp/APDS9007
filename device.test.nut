@@ -40,8 +40,8 @@
                 }
 
                 try {
-                    // check that first readout arrives after 5s (+-200ms)
-                    this.assertClose(5000, hardware.millis() - startMillis, 200);
+                    // check that first readout arrives after [ENABLE_TIMEOUT] (+-50ms)
+                    this.assertClose(APDS9007.ENABLE_TIMEOUT.tofloat(), hardware.millis() - startMillis, 100);
                     // check that light level reported is meaningful
                     this.assertTrue(r.brightness > 0, "Light level should be greater than zero");
                 } catch (e) {
@@ -80,14 +80,15 @@
     }
 
     /**
-     * Test sensor readout in sync mode after 5.5 sec delay
+     * Test sensor readout in sync mode after [ENABLE_TIMEOUT + 0.5s] delay
+     * Reading should be successfull
      */
     function test_Sync_Readout_After_Timeout() {
         return Promise(function (ok, err) {
 
             this._lightSensor.enable(true);
 
-            imp.wakeup(5.5, function() {
+            imp.wakeup(APDS9007.ENABLE_TIMEOUT.tofloat() / 1000 + 0.5, function() {
                 try {
                     local r = this._lightSensor.read();
                     this.assertTrue(r.brightness > 0);
@@ -103,4 +104,45 @@
             this._lightSensor.enable(false);
          }.bindenv(this));
     }
+
+    /**
+     * Test sensor readout in async mode after initial delay of [ENABLE_TIMEOUT - 0.25s]
+     * Reading should arrive in ~0.25s
+     */
+    function test_Async_Readout_After_Initial_Delay() {
+        return Promise(function (ok, err) {
+
+            this._lightSensor.enable(true);
+
+            imp.wakeup(APDS9007.ENABLE_TIMEOUT.tofloat() / 1000 - 0.25, function () {
+
+                local startMillis = hardware.millis();
+                this._lightSensor.read(function (r) {
+
+                    if ("err" in r) {
+                        err("Error Reading APDS9007: " + r.err);
+                        return;
+                    }
+
+                    try {
+                        // check that first readout arrives after 250ms (+-100)
+                        this.assertClose(250, hardware.millis() - startMillis, 100);
+                        // check that light level reported is meaningful
+                        this.assertTrue(r.brightness > 0, "Light level should be greater than zero");
+                    } catch (e) {
+                        err(e);
+                        return;
+                    }
+
+                    ok("Light level is " + r.brightness + " Lux");
+
+                }.bindenv(this));
+            }.bindenv(this));
+        }.bindenv(this))
+
+        .then(function (e) {
+            this._lightSensor.enable(false);
+         }.bindenv(this));
+    }
+
  }
