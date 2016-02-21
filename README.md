@@ -139,7 +139,7 @@ readLightLevel();
 
 ## Testing
 
-Repository comes with a test suite for [impUnit](https://github.com/electricimp/impUnit) and test configuration for [impTest](https://github.com/electricimp/impTest).
+Repository contains [impUnit](https://github.com/electricimp/impUnit) tests and a configuration for [impTest](https://github.com/electricimp/impTest) tool.
 
 Tests can be launched with:
 
@@ -147,11 +147,17 @@ Tests can be launched with:
 imptest test
 ```
 
-Settings for the testing environment can be adjusted in the [.imptest file](https://github.com/electricimp/impTest/blob/develop/docs/imptest-spec.md).
+By default configuration for the testing is read from [.imptest](https://github.com/electricimp/impTest/blob/develop/docs/imptest-spec.md).
+
+To run test with your settings (for example while you are developing), create your copy of **.imptest** file and name it something like **.imptest.local**, then run tests with:
+ 
+ ```bash
+ imptest test -c .imptest.local
+ ```
 
 ### Hardware Required
 
-Tests are expecting an [April](https://electricimp.com/docs/gettingstarted/devkits/) board with the [Env Tail](https://electricimp.com/docs/tails/env/).
+Tests require an [April](https://electricimp.com/docs/gettingstarted/devkits/) board with an [Env Tail](https://electricimp.com/docs/tails/env/).
 
 ## Development
 
