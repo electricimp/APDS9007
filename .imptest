@@ -1,5 +1,5 @@
 {
-    "modelId": "YwbTcV81Ah5G" /* April/EnvTail.A */,
+    "modelId": "YwbTcV81Ah5G" /* April/EnvTail */,
     "devices": ["23349c7838a609ee" /* EI.Test.A */],
     "deviceFile": "APDS9007.class.nut",
     "timeout": 7
