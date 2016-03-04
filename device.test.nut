@@ -40,8 +40,8 @@
                 }
 
                 try {
-                    // check that first readout arrives after [ENABLE_TIMEOUT] (+-50ms)
-                    this.assertClose(APDS9007.ENABLE_TIMEOUT.tofloat(), hardware.millis() - startMillis, 100);
+                    // check that first readout arrives after [ENABLE_TIMEOUT] (+-250ms)
+                    this.assertClose(APDS9007.ENABLE_TIMEOUT.tofloat(), hardware.millis() - startMillis, 250);
                     // check that light level reported is meaningful
                     this.assertTrue(r.brightness > 0, "Light level should be greater than zero");
                 } catch (e) {
@@ -126,7 +126,7 @@
 
                     try {
                         // check that first readout arrives after 250ms (+-100)
-                        this.assertClose(250, hardware.millis() - startMillis, 100);
+                        this.assertClose(250, hardware.millis() - startMillis, 250);
                         // check that light level reported is meaningful
                         this.assertTrue(r.brightness > 0, "Light level should be greater than zero");
                     } catch (e) {
