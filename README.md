@@ -1,3 +1,28 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Driver for the APDS9007 Analog Ambient Light Sensor](#driver-for-the-apds9007-analog-ambient-light-sensor)
+  - [Hardware](#hardware)
+  - [Class Usage](#class-usage)
+    - [Constructor](#constructor)
+    - [Class Methods](#class-methods)
+    - [enable([state])](#enablestate)
+    - [getPointsPerReading()](#getpointsperreading)
+    - [setPointsPerReading(pointsPerReading)](#setpointsperreadingpointsperreading)
+    - [read([callback])](#readcallback)
+  - [Example](#example)
+  - [Testing](#testing)
+    - [Hardware Required](#hardware-required)
+  - [Development](#development)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<br/>
+
+[![Build Status](https://travis-ci.org/electricimp/APDS9007.svg?branch=master)](https://travis-ci.org/electricimp/APDS9007)
+
 Driver for the APDS9007 Analog Ambient Light Sensor
 ===================================
 
@@ -5,7 +30,7 @@ The [APDS9007](http://www.mouser.com/ds/2/38/V02-0512EN-4985.pdf) is a simple, l
 
 Because the imp draws a small input current on analog input pins, and because the output current of this part is very low, a buffer is recommended between the load resistor and the imp for best accuracy.
 
-**To add this library to your project, add** `#require "APDS9007.class.nut:2.0.1"` **to the top of your device code**
+**To add this library to your project, add** `#require "APDS9007.class.nut:2.1.0"` **to the top of your device code**
 
 ## Hardware
 
@@ -77,7 +102,7 @@ Note If an error occured during the read in _asynchronous_ mode, an err key will
 ## Example
 
 ```squirrel
-#require "APDS9007.class.nut:2.0.0"
+#require "APDS9007.class.nut:2.1.0"
 
 // value of load resistor on ALS
 const RLOAD = 47000.0;
@@ -112,11 +137,33 @@ function readLightLevel() {
 readLightLevel();
 ```
 
-## License
+## Testing
 
-The APDS9007 library is licensed under the [MIT License](./LICENSE).
+Repository contains [impUnit](https://github.com/electricimp/impUnit) tests and a configuration for [impTest](https://github.com/electricimp/impTest) tool.
+
+Tests can be launched with:
+
+```bash
+imptest test
+```
+
+By default configuration for the testing is read from [.imptest](https://github.com/electricimp/impTest/blob/develop/docs/imptest-spec.md).
+
+To run test with your settings (for example while you are developing), create your copy of **.imptest** file and name it something like **.imptest.local**, then run tests with:
+ 
+ ```bash
+ imptest test -c .imptest.local
+ ```
+
+### Hardware Required
+
+Tests require an [April](https://electricimp.com/docs/gettingstarted/devkits/) board with an [Env Tail](https://electricimp.com/docs/tails/env/).
 
 ## Development
 
 This repository uses [git-flow](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/).
 Please make your pull requests to the __develop__ branch.
+
+## License
+
+The APDS9007 library is licensed under the [MIT License](./LICENSE).

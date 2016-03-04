@@ -12,14 +12,14 @@
  * @author Mikhail Yurasov <mikhail@electricimp.com>
  * @author Aron Steg <aron@electricimp.com>
  *
- * @version 2.0.1
+ * @version 2.1.0
  */
 class APDS9007 {
 
-    static version = [2, 0, 1];
+    static version = [2, 1, 1];
 
-    // For accurate readings time needed to wait after enabled
-    static ENABLE_TIMEOUT = 5.0;
+    // For accurate readings time needed to wait after enabled [ms]
+    static ENABLE_TIMEOUT = 5000;
 
     // errors
     static ERR_SENSOR_NOT_READY = "Sensor is not ready";
@@ -57,8 +57,8 @@ class APDS9007 {
      */
     function enable(state = true) {
         if (state) /* enabling */ {
-            // store time enable() was called
             _enable_pin.write(1);
+            // store time enable() was called
             _enabled_at = hardware.millis();
         } else /* disabling */ {
             _enable_pin.write(0);
@@ -125,25 +125,25 @@ class APDS9007 {
 
         if (_enabled_at /* sensor is enabled */) {
 
-            local seconds_since_enabled = (hardware.millis() - _enabled_at) / 1000;
+            local ms_since_enabled = hardware.millis() - _enabled_at;
 
             if (cb /* we're async */) {
 
-                if (ENABLE_TIMEOUT <= seconds_since_enabled) {
+                if (ENABLE_TIMEOUT <= ms_since_enabled) {
                     // timeout has passed, we're good to go
                     local reading = _read();
                     imp.wakeup(0, (@() cb(reading)).bindenv(this) );
                 } else {
                     // we will be able to read once timeout passes
                     imp.wakeup(
-                        ENABLE_TIMEOUT - seconds_since_enabled,
+                        (ENABLE_TIMEOUT - ms_since_enabled).tofloat() / 1000,
                         (@() read(cb)).bindenv(this)
                     );
                 }
 
             } else /* we're sync */ {
 
-                if (ENABLE_TIMEOUT > seconds_since_enabled) {
+                if (ENABLE_TIMEOUT > ms_since_enabled) {
                     throw ERR_SENSOR_NOT_READY;
                 }
 
