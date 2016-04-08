@@ -75,7 +75,7 @@
             err = e;
         }
 
-        this.assertTrue(err == "Sensor is not ready");
+        this.assertTrue(err.find("Sensor is not ready") != null);
         this._lightSensor.enable(false);
     }
 
