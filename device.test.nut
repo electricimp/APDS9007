@@ -75,9 +75,9 @@
             err = e;
         }
 
-        local strSearch = err.find("Sensor is not ready");
+        local index = r.err.find("Sensor is not ready");
 
-        this.assertTrue(strSearch != null);
+        this.assertTrue(index == 0);
         this._lightSensor.enable(false);
     }
 

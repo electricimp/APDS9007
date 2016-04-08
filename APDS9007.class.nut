@@ -22,7 +22,7 @@ class APDS9007 {
     static ENABLE_TIMEOUT = 5000;
 
     // errors
-    static ERR_SENSOR_NOT_READY = "Sensor is not ready";
+    static ERR_SENSOR_NOT_READY = "Sensor is not ready.";
     static ERR_SENSOR_NOT_ENABLED = "Sensor is not enabled. Call enable(true) before reading.";
 
     // value of load resistor on ALS (device has current output)
