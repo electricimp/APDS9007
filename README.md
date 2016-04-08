@@ -30,7 +30,7 @@ The [APDS9007](http://www.mouser.com/ds/2/38/V02-0512EN-4985.pdf) is a simple, l
 
 Because the imp draws a small input current on analog input pins, and because the output current of this part is very low, a buffer is recommended between the load resistor and the imp for best accuracy.
 
-**To add this library to your project, add** `#require "APDS9007.class.nut:2.1.0"` **to the top of your device code**
+**To add this library to your project, add** `#require "APDS9007.class.nut:2.2.0"` **to the top of your device code**
 
 ## Hardware
 
@@ -42,7 +42,7 @@ The APDS9007 should be connected as follows:
 
 ### Constructor
 
-To instantiate a new APDS9007 object, you need to pass in the configured analog input pin the sensor is connected to, the value of the load resistor, and a configured digital output enable pin.
+To instantiate a new APDS9007 object, you need to pass in the configured analog input pin the sensor is connected to, the value of the load resistor, and and an optional enable pin.
 
 ```squirrel
 const RLOAD = 47000.0
@@ -60,7 +60,7 @@ lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
 
 ### enable([state])
 
-Enable (state = true) or disable (state = false) the APDS9007. By default the state is set to true. If an enable pin is configured the device must be enabled before attempting to read the light level.  To get an accurate reading the sensor must be enabled for 5 seconds before taking a reading.
+If an enable pin is configured the device must be enabled before attempting to read the light level.  Use this method to enable (state = true) or disable (state = false) the APDS9007.  By default the state is set to true. To get an accurate reading the sensor must be enabled for 5 seconds before taking a reading.
 
 ```squirrel
 lightsensor.enable(true);
@@ -68,7 +68,7 @@ lightsensor.enable(true);
 
 ### getPointsPerReading()
 
-The **getPointsPerReading()** function returns the number of readings taken and internally averaged to produce a light level result. By default points per reading is set to 10.
+The **getPointsPerReading()** method returns the number of readings taken and internally averaged to produce a light level result. By default points per reading is set to 10.
 
 ```squirrel
 server.log( lightsensor.getPointsPerReading() );
@@ -76,7 +76,7 @@ server.log( lightsensor.getPointsPerReading() );
 
 ### setPointsPerReading(pointsPerReading)
 
-The **setPointsPerReading()** function sets the number of readings taken and internally averaged to produce a light level result.  The points per reading value is returned.  By default points per reading is set to 10.
+The **setPointsPerReading()** method sets the number of readings taken and internally averaged to produce a light level result.  The points per reading value is returned.  By default points per reading is set to 10.
 
 ```squirrel
 // Set number of readings to be averaged to 15.  Slower than default, but more precise.
@@ -85,24 +85,33 @@ lightsensor.setPointsPerReading(15);
 
 ### read([callback])
 
-The **read()** function reads and returns a table with a key of *brightness* containing the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux). If a callback is supplied, the read will execute asynchronously and the result table  will be passed to the callback function – if no callback is supplied, the read will execute synchronously and a table containing the sensor data will be returned.
+The **read()** method reads the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux). The sensor must be enabled for at least 5 seconds before a reading will be returned.  If a callback is supplied, the read method will execute asynchronously and a result table will be passed to the callback function – if no callback is supplied, the read method will execute synchronously and a result table will be returned.  If the reading was successful the result table will contain the key *brightness* with the reading result, otherwise the result table will contain the key *err* with the error message.
 
+**Asynchronous Example:**
 ```squirrel
 lightsensor.read(function(result) {
     if ("err" in result) {
         server.log("Error Reading APDS9007: " + result.err);
-        return;
+    } else {
+        server.log("Light level = " + result.brightness + " Lux");
     }
-    server.log("Light level = " + result.brightness + " Lux");
 });
 ```
 
-Note If an error occured during the read in _asynchronous_ mode, an err key will be present in the data – you should always check for the existance of the err key before using the results. In _synchronous_ mode an exception will be thrown in case of error.
+**Synchronous Example**
+```squirrel
+local result = lightsensor.read();
+if ("err" in result) {
+    server.log("Error Reading APDS9007: " + result.err);
+} else {
+    server.log("Light level = " + result.brightness + " Lux");
+}
+```
 
 ## Example
 
 ```squirrel
-#require "APDS9007.class.nut:2.1.0"
+#require "APDS9007.class.nut:2.2.0"
 
 // value of load resistor on ALS
 const RLOAD = 47000.0;
@@ -150,7 +159,7 @@ imptest test
 By default configuration for the testing is read from [.imptest](https://github.com/electricimp/impTest/blob/develop/docs/imptest-spec.md).
 
 To run test with your settings (for example while you are developing), create your copy of **.imptest** file and name it something like **.imptest.local**, then run tests with:
- 
+
  ```bash
  imptest test -c .imptest.local
  ```
