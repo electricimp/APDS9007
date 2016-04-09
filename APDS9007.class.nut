@@ -12,11 +12,11 @@
  * @author Mikhail Yurasov <mikhail@electricimp.com>
  * @author Aron Steg <aron@electricimp.com>
  *
- * @version 2.1.0
+ * @version 2.2.0
  */
 class APDS9007 {
 
-    static version = [2, 1, 1];
+    static version = [2, 2, 0];
 
     // For accurate readings time needed to wait after enabled [ms]
     static ENABLE_TIMEOUT = 5000;
