@@ -75,7 +75,7 @@
             err = e;
         }
 
-        this.assertTrue(err == "Sensor is not ready");
+        this.assertTrue(err == APDS9007.ERR_SENSOR_NOT_READY);
         this._lightSensor.enable(false);
     }
 
