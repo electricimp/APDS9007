@@ -12,18 +12,19 @@
  * @author Mikhail Yurasov <mikhail@electricimp.com>
  * @author Aron Steg <aron@electricimp.com>
  *
- * @version 2.1.0
+ * @version 2.2.0
  */
 class APDS9007 {
 
-    static version = [2, 1, 1];
+    static version = [2, 2, 0];
 
     // For accurate readings time needed to wait after enabled [ms]
     static ENABLE_TIMEOUT = 5000;
 
     // errors
-    static ERR_SENSOR_NOT_READY = "Sensor is not ready";
+    static ERR_SENSOR_NOT_READY = "Sensor is not ready.";
     static ERR_SENSOR_NOT_ENABLED = "Sensor is not enabled. Call enable(true) before reading.";
+    static ERR_ENABLE_HANDLED_EXTERNALLY = "Sensor enabling is handled externally.";
 
     // value of load resistor on ALS (device has current output)
     _rload              = 0.0;
@@ -38,12 +39,18 @@ class APDS9007 {
     /**
      * @param {Pin} input_pin - analog input pin
      * @param {float} rload - value of load resistor on ALS (device has current output)
-     * @param {Pin} enable_pin - enable pin
+     * @param {Pin=null} enable_pin - enable pin
      */
-    constructor(input_pin, rload, enable_pin) {
+    constructor(input_pin, rload, enable_pin = null) {
         _input_pin = input_pin;
         _enable_pin = enable_pin;
         _rload = rload;
+
+        // if no enable pin is provided, assume
+        // that sensor is enabled long time ago
+        if (!enable_pin) {
+            _enabled_at = -1;
+        }
     }
 
     /**
@@ -56,6 +63,12 @@ class APDS9007 {
      * @return {null}
      */
     function enable(state = true) {
+        // if we don't have enable pin,
+        // we cannot enable/disable the sensor
+        if (!_enable_pin) {
+            throw ERR_ENABLE_HANDLED_EXTERNALLY;
+        }
+
         if (state) /* enabling */ {
             _enable_pin.write(1);
             // store time enable() was called
