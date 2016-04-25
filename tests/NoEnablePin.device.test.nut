@@ -75,19 +75,4 @@
         }.bindenv(this));
     }
 
-    /**
-     * Test that .enable() produces an error
-     */
-    function test3_Enable() {
-        local err;
-
-        // reading before timeout should raise an error
-        try {
-            this._lightSensor.enable(true);
-        } catch (e) {
-            err = e;
-        }
-
-        this.assertTrue(err == APDS9007.ERR_ENABLE_HANDLED_EXTERNALLY);
-    }
  }

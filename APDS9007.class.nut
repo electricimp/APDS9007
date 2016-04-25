@@ -12,19 +12,18 @@
  * @author Mikhail Yurasov <mikhail@electricimp.com>
  * @author Aron Steg <aron@electricimp.com>
  *
- * @version 2.2.0
+
+ * @version 2.2.1
  */
 class APDS9007 {
 
-    static version = [2, 2, 0];
+    static version = [2, 2, 1];
 
     // For accurate readings time needed to wait after enabled [ms]
     static ENABLE_TIMEOUT = 5000;
 
     // errors
     static ERR_SENSOR_NOT_READY = "Sensor is not ready.";
-    static ERR_SENSOR_NOT_ENABLED = "Sensor is not enabled. Call enable(true) before reading.";
-    static ERR_ENABLE_HANDLED_EXTERNALLY = "Sensor enabling is handled externally.";
 
     // value of load resistor on ALS (device has current output)
     _rload              = 0.0;
@@ -33,8 +32,8 @@ class APDS9007 {
 
     _points_per_read    = 10.0;
 
-    // stores time when enable() was last called
-    _enabled_at         = null;
+    // stores time when sensor will be ready to take an accurate reading
+    _ready_at  = null;
 
     /**
      * @param {Pin} input_pin - analog input pin
@@ -45,12 +44,8 @@ class APDS9007 {
         _input_pin = input_pin;
         _enable_pin = enable_pin;
         _rload = rload;
-
-        // if no enable pin is provided, assume
-        // that sensor is enabled long time ago
-        if (!enable_pin) {
-            _enabled_at = -1;
-        }
+        // if no enable pin is passed in - enable sensor immediately
+        if(enable_pin == null) _ready_at = hardware.millis() + ENABLE_TIMEOUT;
     }
 
     /**
@@ -63,19 +58,13 @@ class APDS9007 {
      * @return {null}
      */
     function enable(state = true) {
-        // if we don't have enable pin,
-        // we cannot enable/disable the sensor
-        if (!_enable_pin) {
-            throw ERR_ENABLE_HANDLED_EXTERNALLY;
-        }
-
-        if (state) /* enabling */ {
+        if (_enable_pin && state) /* enabling */ {
             _enable_pin.write(1);
-            // store time enable() was called
-            _enabled_at = hardware.millis();
-        } else /* disabling */ {
+            // set time when sensor will be ready to take a reading
+            _ready_at = hardware.millis() + ENABLE_TIMEOUT;
+        } else if (_enable_pin && !state) /* disabling */ {
             _enable_pin.write(0);
-            _enabled_at = null;
+            _ready_at = null;
         }
     }
 
@@ -102,11 +91,51 @@ class APDS9007 {
     }
 
     /**
+     * Reads and returns a table with a key brightness
+     * containing the ambient light level in Lux or
+     * a key err containing an error message.
+     *
+     * @param {function(result)|null} cb - Callback executed on reading availability. If no callback specified, reading table is returned.
+     * @return {null|{brightness}}
+     */
+    function read(cb = null) {
+        local result = {};
+        local resultReady = false;
+
+        if(_ready_at == null) /* Sensor not enabled */ {
+            result = {"err" : ERR_SENSOR_NOT_ENABLED};
+            resultReady = true;
+        }  else if (hardware.millis() >= _ready_at )  /* Sensor enabled & ready*/ {
+            result = _getBrightness();
+            resultReady = true;
+        } else  /* Sensor enabled but not ready */ {
+            local delay = (_ready_at - hardware.millis() ).tofloat() / 1000;
+            if (cb == null) /* We're sync - wait then take reading */ {
+                imp.sleep(delay);
+                result = _getBrightness();
+                resultReady = true;
+            } else /* We're async - retry */ {
+                imp.wakeup(delay, function() { read(cb); }.bindenv(this));
+            }
+        }
+
+        if(resultReady) {
+            // We're sync - return result
+            if (cb == null) return result;
+            // We're async - pass result to callback
+            imp.wakeup(0, function() { cb(result); }.bindenv(this));
+        }
+    }
+
+    //  PRIVATE FUNCTIONS
+    // --------------------------------------------------------------------------------------------
+
+    /**
      * Get reading
      * Assumes that the sensor is enabled and enable timeout has passed
      * @private
      */
-    function _read() {
+    function _getBrightness() {
         local Vpin = 0;
         local Vcc = 0;
 
@@ -122,59 +151,6 @@ class APDS9007 {
 
         local Iout = (Vpin / _rload) * 1000000.0; // current in µA
         return {"brightness" : math.pow(10.0, (Iout / 10.0))};
-    }
-
-    /**
-     * Reads and returns a table with a key of brightness
-     * containing the ambient light level in Lux.
-     *
-     * @throws ERR_SENSOR_NOT_READY
-     * @throws ERR_SENSOR_NOT_ENABLED
-     *
-     * @param {function(result)|null} cb - Callback executed on reading availability. If no callback specified, reading is returned.
-     * @return {null|{brightness}}
-     */
-    function read(cb = null) {
-
-        if (_enabled_at /* sensor is enabled */) {
-
-            local ms_since_enabled = hardware.millis() - _enabled_at;
-
-            if (cb /* we're async */) {
-
-                if (ENABLE_TIMEOUT <= ms_since_enabled) {
-                    // timeout has passed, we're good to go
-                    local reading = _read();
-                    imp.wakeup(0, (@() cb(reading)).bindenv(this) );
-                } else {
-                    // we will be able to read once timeout passes
-                    imp.wakeup(
-                        (ENABLE_TIMEOUT - ms_since_enabled).tofloat() / 1000,
-                        (@() read(cb)).bindenv(this)
-                    );
-                }
-
-            } else /* we're sync */ {
-
-                if (ENABLE_TIMEOUT > ms_since_enabled) {
-                    throw ERR_SENSOR_NOT_READY;
-                }
-
-                return _read();
-            }
-
-        } else /* sensor is not enabled */ {
-
-            if (cb /* we're async */) {
-
-                // pass error to callback
-                imp.wakeup(0, (@() cb({err = ERR_SENSOR_NOT_ENABLED})).bindenv(this));
-
-            } else /* we're sync*/ {
-                throw ERR_SENSOR_NOT_ENABLED;
-            }
-        }
-
     }
 
 }
