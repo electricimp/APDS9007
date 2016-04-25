@@ -12,7 +12,7 @@
  * @author Mikhail Yurasov <mikhail@electricimp.com>
  * @author Aron Steg <aron@electricimp.com>
  *
- * @version 2.2.0
+ * @version 2.2.1
  */
 class APDS9007 {
 

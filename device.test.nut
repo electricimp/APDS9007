@@ -61,26 +61,6 @@
     }
 
     /**
-     * Test sensor readout in sync mode without delay
-     * Should produce an error
-     */
-    function test_Sync_Readout_Without_Timeout() {
-        local err;
-        this._lightSensor.enable(true);
-
-        // reading before timeout should raise an error
-        try {
-            local r = this._lightSensor.read();
-             this.assertTrue(r.brightness > 0);
-            ok("Light level is " + r.brightness + " Lux");
-        } catch (e) {
-            err(e);
-        }
-
-        this._lightSensor.enable(false);
-    }
-
-    /**
      * Test sensor readout in sync mode after [ENABLE_TIMEOUT + 0.5s] delay
      * Reading should be successfull
      */
