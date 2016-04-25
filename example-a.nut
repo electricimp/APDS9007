@@ -1,4 +1,4 @@
-#require "APDS9007.class.nut:2.2.0"
+#require "APDS9007.class.nut:2.2.1"
 
 // value of load resistor on ALS
 const RLOAD = 47000.0;
