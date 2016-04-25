@@ -12,6 +12,7 @@
  * @author Mikhail Yurasov <mikhail@electricimp.com>
  * @author Aron Steg <aron@electricimp.com>
  *
+
  * @version 2.2.1
  */
 class APDS9007 {
@@ -37,7 +38,7 @@ class APDS9007 {
     /**
      * @param {Pin} input_pin - analog input pin
      * @param {float} rload - value of load resistor on ALS (device has current output)
-     * @param {Pin} enable_pin - enable pin
+     * @param {Pin=null} enable_pin - enable pin
      */
     constructor(input_pin, rload, enable_pin = null) {
         _input_pin = input_pin;

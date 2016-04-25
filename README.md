@@ -56,9 +56,12 @@ enablePin.configure(DIGITAL_OUT, 0)
 lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
 ```
 
+If the `enablePin` is omitted, it is assumed that the sensor is already enabled by the time first read attempt is made.
+
 ### Class Methods
 
 ### enable([state])
+
 
 If an enable pin is configured the device must be enabled before attempting to read the light level.  Use this method to enable (state = true) or disable (state = false) the APDS9007.  By default the state is set to true. To get an accurate reading the sensor must be enabled for 5 seconds before taking a reading.
 
