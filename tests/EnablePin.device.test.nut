@@ -62,28 +62,6 @@
     }
 
     /**
-<<<<<<< HEAD:device.test.nut
-=======
-     * Test sensor readout in sync mode without delay
-     * Should produce an error
-     */
-    function test_Sync_Readout_Without_Timeout() {
-        local err;
-        this._lightSensor.enable(true);
-
-        // reading before timeout should raise an error
-        try {
-            local r = this._lightSensor.read();
-        } catch (e) {
-            err = e;
-        }
-
-        this.assertTrue(err == APDS9007.ERR_SENSOR_NOT_READY);
-        this._lightSensor.enable(false);
-    }
-
-    /**
->>>>>>> develop:tests/EnablePin.device.test.nut
      * Test sensor readout in sync mode after [ENABLE_TIMEOUT + 0.5s] delay
      * Reading should be successfull
      */
