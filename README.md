@@ -30,7 +30,7 @@ The [APDS9007](http://www.mouser.com/ds/2/38/V02-0512EN-4985.pdf) is a simple, l
 
 Because the imp draws a small input current on analog input pins, and because the output current of this part is very low, a buffer is recommended between the load resistor and the imp for best accuracy.
 
-**To add this library to your project, add** `#require "APDS9007.class.nut:2.2.0"` **to the top of your device code**
+**To add this library to your project, add** `#require "APDS9007.class.nut:2.2.1"` **to the top of your device code**
 
 ## Hardware
 
@@ -85,7 +85,9 @@ lightsensor.setPointsPerReading(15);
 
 ### read([callback])
 
-The **read()** method reads the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux). The sensor must be enabled for at least 5 seconds before a reading will be returned.  If a callback is supplied, the read method will execute asynchronously and a result table will be passed to the callback function – if no callback is supplied, the read method will execute synchronously and a result table will be returned.  If the reading was successful the result table will contain the key *brightness* with the reading result, otherwise the result table will contain the key *err* with the error message.
+The **read()** method reads the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux). If a callback is supplied, the read method will execute asynchronously and a result table will be passed to the callback function.  If no callback is supplied, the read method will execute synchronously and a result table will be returned.  If the reading was successful the result table will contain the key *brightness* with the reading result, otherwise the result table will contain the key *err* with the error message.
+
+The sensor must be enabled for at least 5 seconds before an accurate reading is returned.  When a synchronous read is called immediately after sensor is enabled the code block for 5 seconds then return a reading.
 
 **Asynchronous Example:**
 ```squirrel
@@ -111,7 +113,7 @@ if ("err" in result) {
 ## Example
 
 ```squirrel
-#require "APDS9007.class.nut:2.2.0"
+#require "APDS9007.class.nut:2.2.1"
 
 // value of load resistor on ALS
 const RLOAD = 47000.0;

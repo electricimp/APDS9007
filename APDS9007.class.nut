@@ -16,14 +16,13 @@
  */
 class APDS9007 {
 
-    static version = [2, 2, 0];
+    static version = [2, 2, 1];
 
     // For accurate readings time needed to wait after enabled [ms]
     static ENABLE_TIMEOUT = 5000;
 
     // errors
     static ERR_SENSOR_NOT_READY = "Sensor is not ready.";
-    static ERR_SENSOR_NOT_ENABLED = "Sensor is not enabled. Call enable(true) before reading.";
 
     // value of load resistor on ALS (device has current output)
     _rload              = 0.0;
@@ -100,26 +99,26 @@ class APDS9007 {
      */
     function read(cb = null) {
         local result = {};
-        local ready = false;
+        local resultReady = false;
 
         if(_ready_at == null) /* Sensor not enabled */ {
             result = {"err" : ERR_SENSOR_NOT_ENABLED};
-            ready = true;
+            resultReady = true;
         }  else if (hardware.millis() >= _ready_at )  /* Sensor enabled & ready*/ {
             result = _getBrightness();
-            ready = true;
+            resultReady = true;
         } else  /* Sensor enabled but not ready */ {
-            if (cb == null) /* We're sync - pass error */ {
-                local errMsg = format("%s  Please try again in %i milliseconds.", ERR_SENSOR_NOT_READY, _ready_at - hardware.millis())
-                result = { "err" : errMsg };
-                ready = true;
+            local delay = (_ready_at - hardware.millis() ).tofloat() / 1000;
+            if (cb == null) /* We're sync - wait then take reading */ {
+                imp.sleep(delay);
+                result = _getBrightness();
+                resultReady = true;
             } else /* We're async - retry */ {
-                local delay = (_ready_at - hardware.millis() ).tofloat() / 1000;
                 imp.wakeup(delay, function() { read(cb); }.bindenv(this));
             }
         }
 
-        if(ready) {
+        if(resultReady) {
             // We're sync - return result
             if (cb == null) return result;
             // We're async - pass result to callback

@@ -71,14 +71,12 @@
         // reading before timeout should raise an error
         try {
             local r = this._lightSensor.read();
-            err = r.err
+             this.assertTrue(r.brightness > 0);
+            ok("Light level is " + r.brightness + " Lux");
         } catch (e) {
-            err = e;
+            err(e);
         }
 
-        local index = err.find("Sensor is not ready");
-
-        this.assertTrue(index == 0);
         this._lightSensor.enable(false);
     }
 
