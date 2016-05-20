@@ -1,28 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Driver for the APDS9007 Analog Ambient Light Sensor](#driver-for-the-apds9007-analog-ambient-light-sensor)
-  - [Hardware](#hardware)
-  - [Class Usage](#class-usage)
-    - [Constructor](#constructor)
-    - [Class Methods](#class-methods)
-    - [enable([state])](#enablestate)
-    - [getPointsPerReading()](#getpointsperreading)
-    - [setPointsPerReading(pointsPerReading)](#setpointsperreadingpointsperreading)
-    - [read([callback])](#readcallback)
-  - [Example](#example)
-  - [Testing](#testing)
-    - [Hardware Required](#hardware-required)
-  - [Development](#development)
-  - [License](#license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<br/>
-
-[![Build Status](https://travis-ci.org/electricimp/APDS9007.svg?branch=master)](https://travis-ci.org/electricimp/APDS9007)
-
 Driver for the APDS9007 Analog Ambient Light Sensor
 ===================================
 
@@ -31,6 +6,8 @@ The [APDS9007](http://www.mouser.com/ds/2/38/V02-0512EN-4985.pdf) is a simple, l
 Because the imp draws a small input current on analog input pins, and because the output current of this part is very low, a buffer is recommended between the load resistor and the imp for best accuracy.
 
 **To add this library to your project, add** `#require "APDS9007.class.nut:2.2.1"` **to the top of your device code**
+
+[![Build Status](https://travis-ci.org/electricimp/APDS9007.svg?branch=master)](https://travis-ci.org/electricimp/APDS9007)
 
 ## Hardware
 
@@ -56,14 +33,12 @@ enablePin.configure(DIGITAL_OUT, 0)
 lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
 ```
 
-If the `enablePin` is omitted, it is assumed that the sensor is already enabled by the time first read attempt is made.
-
 ### Class Methods
 
 ### enable([state])
 
 
-If an enable pin is configured the device must be enabled before attempting to read the light level.  Use this method to enable (state = true) or disable (state = false) the APDS9007.  By default the state is set to true. To get an accurate reading the sensor must be enabled for 5 seconds before taking a reading.
+The device must be enabled before attempting to read the light level.  Use this method to enable (state = true) or disable (state = false) the APDS9007.  By default the state is set to true. If no enable pin is configured in the sensor will be enabled by defualt. To get an accurate reading the sensor must be enabled for 5 seconds before taking a reading.
 
 ```squirrel
 lightsensor.enable(true);
@@ -71,7 +46,7 @@ lightsensor.enable(true);
 
 ### getPointsPerReading()
 
-The **getPointsPerReading()** method returns the number of readings taken and internally averaged to produce a light level result. By default points per reading is set to 10.
+The **getPoitsPerReading()** method returns the number of readings taken and internally averaged to produce a light level result.
 
 ```squirrel
 server.log( lightsensor.getPointsPerReading() );
@@ -90,7 +65,7 @@ lightsensor.setPointsPerReading(15);
 
 The **read()** method reads the ambient light level in [Lux](http://en.wikipedia.org/wiki/Lux). If a callback is supplied, the read method will execute asynchronously and a result table will be passed to the callback function.  If no callback is supplied, the read method will execute synchronously and a result table will be returned.  If the reading was successful the result table will contain the key *brightness* with the reading result, otherwise the result table will contain the key *err* with the error message.
 
-The sensor must be enabled for at least 5 seconds before an accurate reading is returned.  When a synchronous read is called immediately after sensor is enabled the code block for 5 seconds then return a reading.
+**Note:** The sensor must be enabled for at least 5 seconds before an accurate reading is returned.  When a synchronous read is called immediately after sensor is enabled the code will block for 5 seconds then return a reading. When an asynchronous read is called the the code will not block, but it will be 5 seconds before the callback returns the result.
 
 **Asynchronous Example:**
 ```squirrel
@@ -116,8 +91,6 @@ if ("err" in result) {
 ## Example
 
 ```squirrel
-#require "APDS9007.class.nut:2.2.1"
-
 // value of load resistor on ALS
 const RLOAD = 47000.0;
 
@@ -172,11 +145,6 @@ To run test with your settings (for example while you are developing), create yo
 ### Hardware Required
 
 Tests require an [April](https://electricimp.com/docs/gettingstarted/devkits/) board with an [Env Tail](https://electricimp.com/docs/tails/env/).
-
-## Development
-
-This repository uses [git-flow](http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/).
-Please make your pull requests to the __develop__ branch.
 
 ## License
 
