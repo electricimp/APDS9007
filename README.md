@@ -5,7 +5,7 @@ The [APDS9007](http://www.mouser.com/ds/2/38/V02-0512EN-4985.pdf) is a simple, l
 
 Because the imp draws a small input current on analog input pins, and because the output current of this part is very low, a buffer is recommended between the load resistor and the imp for best accuracy.
 
-**To add this library to your project, add** `#require "APDS9007.class.nut:2.2.1"` **to the top of your device code**
+**To add this library to your project, add** `#require "APDS9007.class.nut:3.0.0"` **to the top of your device code**
 
 [![Build Status](https://travis-ci.org/electricimp/APDS9007.svg?branch=master)](https://travis-ci.org/electricimp/APDS9007)
 
