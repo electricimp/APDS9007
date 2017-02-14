@@ -1,6 +1,6 @@
 {
-    "modelId": "pSrGKzgpqPO6" /* April/EnvTail */,
-    "devices": ["23349c7838a609ee" /* EI.Test.A */],
+    "modelId": "qryDFGlK1tUd" /* April/EnvTail */,
+    "devices": ["2370797838a609ee" /* EI.Test.B */],
     "deviceFile": "APDS9007.class.nut",
     "timeout": 7,
     "tests": [ "*.test.nut", "tests/**/*.test.nut" ]
