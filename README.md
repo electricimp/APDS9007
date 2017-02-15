@@ -42,7 +42,7 @@ lightsensor.enable(true);
 
 This method enables the APDS9007. It may be passed either `true` or `false`; by default, *state* is set to `true`. Passing `false` will disable the APDS9007.
 
-If an enable pin has been configured, the APDS9007 **must** be enabled before attempting to read the light level. To get an accurate reading, the sensor must be enabled for at least five seconds before taking a reading. However, the library manages this for you *(see the *read()* method, below)*.
+If an enable pin has been configured, the APDS9007 **must** be enabled before attempting to read the light level. To get an accurate reading, the sensor must be enabled for at least five seconds before taking a reading. However, the library manages this for you *(see the* read() *method, below)*.
 
 
 ```squirrel
