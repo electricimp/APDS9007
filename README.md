@@ -22,15 +22,15 @@ The APDS9007 should be connected as follows:
 To instantiate a new APDS9007 object, you need to pass in the configured analog input pin to which the sensor is connected, the value of your chosen load resistor and, optionally, a configured digital output sensor-enable pin.
 
 ```squirrel
-const RLOAD = 47000.0
+const RLOAD = 47000.0;
 
-analogInputPin <- hardware.pin5
-analogInputPin.configure(ANALOG_IN)
+analogInputPin <- hardware.pin5;
+analogInputPin.configure(ANALOG_IN);
 
-enablePin <- hardware.pin7
-enablePin.configure(DIGITAL_OUT, 0)
+enablePin <- hardware.pin7;
+enablePin.configure(DIGITAL_OUT, 0);
 
-lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin)
+lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin);
 ```
 
 ### Class Methods
@@ -109,15 +109,10 @@ const RLOAD = 47000.0;
 analogInputPin <- hardware.pin5;
 analogInputPin.configure(ANALOG_IN);
 
-// Use pin 7 as enable pin
-enablePin <- hardware.pin7;
-enablePin.configure(DIGITAL_OUT, 0);
-
 // Initialize driver class
-lightsensor <- APDS9007(analogInputPin, RLOAD , enablePin);
-
-// Enable sensor
-lightsensor.enable(true);
+// Sensor is auto-enabled because we have not
+// provided an enable pin (not needed in this example)
+lightsensor <- APDS9007(analogInputPin, RLOAD);
 
 // Get reading
 function readLightLevel() {
@@ -126,11 +121,11 @@ function readLightLevel() {
             server.error("Error Reading APDS9007: " + result.err);
             return;
         }
-        
+
         server.log("Light level = " + result.brightness + " Lux");
-        
+
         // Repeat in 2 seconds
-        imp.wakeup(2.0, readLightLevel); 
+        imp.wakeup(2.0, readLightLevel);
     });
 };
 
