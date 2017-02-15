@@ -31,6 +31,9 @@ enablePin <- hardware.pin7;
 enablePin.configure(DIGITAL_OUT, 0);
 
 lightsensor <- APDS9007(analogInputPin, RLOAD, enablePin);
+
+// Using an enable pin so must enable sensor
+lightsensor.enable(true);
 ```
 
 ### Class Methods
