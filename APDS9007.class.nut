@@ -13,17 +13,17 @@
  * @author Aron Steg <aron@electricimp.com>
  *
 
- * @version 2.2.1
+ * @version 3.0.0
  */
 class APDS9007 {
 
-    static version = [2, 2, 1];
+    static VERSION = "3.0.0";
 
     // For accurate readings time needed to wait after enabled [ms]
     static ENABLE_TIMEOUT = 5000;
 
     // errors
-    static ERR_SENSOR_NOT_READY = "Sensor is not ready.";
+    static ERR_SENSOR_NOT_ENABLED = "Sensor is not enabled.";
 
     // value of load resistor on ALS (device has current output)
     _rload              = 0.0;
