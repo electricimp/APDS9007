@@ -7,7 +7,7 @@ Because imps draw a small input current on analog input pins, and because the ou
 
 **To add this library to your project, add** `#require "APDS9007.class.nut:3.0.0"` **to the top of your device code**
 
-[![Build Status](https://travis-ci.org/electricimp/APDS9007.svg?branch=master)](https://travis-ci.org/electricimp/APDS9007)
+[![Build Status](https://cse-ci.electricimp.com/app/rest/builds/buildType:(id:Apds9007_BuildAndTest)/statusIcon)]
 
 ## Hardware
 
