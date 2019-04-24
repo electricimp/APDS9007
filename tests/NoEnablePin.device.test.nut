@@ -58,8 +58,8 @@
                 }
 
                 try {
-                    // check that first readout arrives after 0+-250ms
-                    this.assertClose(0, hardware.millis() - startMillis, 250);
+                    // check that first readout arrives after 0+-300ms
+                    this.assertClose(0, hardware.millis() - startMillis, 300);
 
                     // check that light level reported is meaningful
                     this.assertTrue(r.brightness > 0, "Light level should be greater than zero");

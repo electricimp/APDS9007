@@ -1,0 +1,12 @@
+{
+  "deviceGroupId": "a93bc3b2-fa8b-c4a0-d2ef-75dd922dfb61",
+  "timeout": 30,
+  "stopOnFail": false,
+  "allowDisconnect": false,
+  "builderCache": false,
+  "testFiles": [
+    "*.test.nut",
+    "tests/**/*.test.nut"
+  ],
+  "deviceFile": "APDS9007.class.nut"
+}
