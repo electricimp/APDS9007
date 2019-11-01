@@ -116,7 +116,7 @@ Integer &mdash; The number of data points averaged per reading.
 server.log(lightsensor.getPointsPerReading());
 ```
 
-### setPointsPerReading(*pointsPerReading*) ##
+### setPointsPerReading(*pointsPerReading*) ###
 
 This method sets the number of readings (data points) taken and internally averaged to produce a light-level result. The points per reading value is returned. By default, the number of data points per reading is set to ten. The higher the value, the more samples are taken and the more precise the reading, but the longer the sensor takes to return the reading. If the *read()* method *(see above)* is called synchronously, it will block until all the samples have been taken and averaged, so we recommend using *read()* asynchronously.
 
@@ -138,9 +138,9 @@ Integer &mdash; The applied number of data points averaged per reading.
 lightsensor.setPointsPerReading(15);
 ```
 
-## Full Example ##
+## Example ##
 
-Example code can be found in the [examples directory](./examples).
+Sample code can be found in the [examples directory](./examples).
 
 ## Testing ##
 
