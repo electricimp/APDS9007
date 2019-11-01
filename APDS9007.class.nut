@@ -1,7 +1,7 @@
 /**
  * This file is licensed under the MIT License
  * http://opensource.org/licenses/MIT
- * @copyright (c) 2015 - 2016 Electric Imp
+ * @copyright (c) 2015-19 Electric Imp
  */
 
 /**
