@@ -39,9 +39,9 @@ lightsensor.enable(true);
 
 ### enable(*[state]*) ###
 
-This method enables or disables the APDS9007.
+This method enables or disables the APDS-9007.
 
-If an enable pin has been configured, the APDS9007 **must** be enabled before attempting to read the light level. To get an accurate reading, the sensor must be enabled for at least five seconds before taking a reading. However, the library manages this for you &mdash; see [*read()*](#readcallback), below.
+If an enable pin has been configured, the APDS-9007 **must** be enabled before attempting to read the light level. To get an accurate reading, the sensor must be enabled for at least five seconds before taking a reading. However, the library manages this for you &mdash; see [*read()*](#readcallback), below.
 
 #### Parameters ####
 
